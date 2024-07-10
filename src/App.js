@@ -1,6 +1,6 @@
 import "./App.css";
 import { useEffect, useState } from "react";
-import { PanGame, PanSdkEvent } from "@digi-money/game";
+import { ChainId, PanGame, PanSdkEvent } from "@digi-money/game";
 import { validateResponse } from "./helper";
 import { Buffer } from "buffer";
 
@@ -45,9 +45,12 @@ function App() {
 
   const reqConnectWallet = () => {
     panGameInstance.connectWallet({
-      name: "Game vo lam chi mong",
-      logoUrl:
-        "https://vuonglaogia.zagoo.vn/play-game/static/media/app_icon.bcf558d841cf81db6e85.png",
+      chainId: ChainId.SOLANA,
+      gameInfo: {
+        name: "Game vo lam chi mong",
+        logoUrl:
+          "https://vuonglaogia.zagoo.vn/play-game/static/media/app_icon.bcf558d841cf81db6e85.png",
+      },
     });
   };
 
@@ -58,12 +61,16 @@ function App() {
   };
 
   const reqSignMessage = () => {
-    panGameInstance.signMessage("Please sign this message: Hello world");
+    panGameInstance.signMessage({
+      message: "Please sign this message: Hello world",
+      chainId: ChainId.SOLANA,
+    });
   };
 
   const reqSignTransaction = () => {
     panGameInstance.sendTransaction({
       data: Buffer.from("Hello, Solana!", "base64"), // or VersionTransaction here
+      chainId: ChainId.SOLANA,
     });
   };
 

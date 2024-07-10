@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@digi-money/game": "file:./digi-money-game-v0.0.1.tgz",
+    "@digi-money/game": "file:./digi-money-game-v0.0.2-rc1.tgz",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
