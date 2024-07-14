@@ -18,4 +18,7 @@ export default defineConfig({
       stream: "stream-browserify",
     },
   },
+  build: {
+    outDir: "build", // Change 'build' to your preferred folder name
+  },
 });
