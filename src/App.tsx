@@ -13,7 +13,6 @@ import {
   fetchPlayer,
   fetchBalance,
 } from "@digi-money/galactic-game-contract-sdk";
-import { Connection, PublicKey } from "@solana/web3.js";
 import buffer from "buffer";
 
 window.Buffer = buffer.Buffer;
@@ -27,7 +26,8 @@ function App() {
   const [signTxsResponse, setSignTxsResponse] = useState("");
   const [player, setPlayer] = useState("");
   const [balance, setBalance] = useState("");
-  const connection = new Connection("http://127.0.0.1:8899", "confirmed");
+  const rpcUrl = 'http://127.0.0.1:8899';
+
   window.Buffer = Buffer;
   useEffect(() => {
     const unsubscribe = panGameInstance.onMessage((response) => {
@@ -94,8 +94,8 @@ function App() {
 
   const triggerCreateToken = async () => {
     const tx = await createGalacticGameToken(
-      connection,
-      new PublicKey(session.wallet),
+      rpcUrl,
+      session.wallet,
       "Gold token",
       "GOLD",
       "https://5vfxc4tr6xoy23qefqbj4qx2adzkzapneebanhcalf7myvn5gzja.arweave.net/7UtxcnH13Y1uBCwCnkL6APKsge0hAgacQFl-zFW9NlI"
@@ -108,14 +108,7 @@ function App() {
   };
 
   const triggerInitGame = async () => {
-    const [treasuryTokenAccount] = PublicKey.findProgramAddressSync(
-      [Buffer.from("galactic-game-treasury")],
-      new PublicKey("6GeyBRLAG2wRnxnofRrv42MFj9UJL6CJ2bSxa9U5sG1d")
-    );
-
-    console.log(treasuryTokenAccount.toBase58());
-
-    const tx = await initGame(connection, new PublicKey(session.wallet), {
+    const tx = await initGame(rpcUrl, session.wallet, {
       seasonDuration: 150,
       sessionDuration: 5,
       systemHealthCheckPeriod: 10,
@@ -134,7 +127,7 @@ function App() {
   };
 
   const triggerStartGame = async () => {
-    const tx = await startTheGame(connection, new PublicKey(session.wallet));
+    const tx = await startTheGame(rpcUrl, session.wallet);
 
     panGameInstance.sendTransaction({
       data: tx.serialize(),
@@ -143,7 +136,7 @@ function App() {
   };
 
   const triggerStartSession = async () => {
-    const tx = await startSession(connection, new PublicKey(session.wallet));
+    const tx = await startSession(rpcUrl, session.wallet);
 
     panGameInstance.sendTransaction({
       data: tx.serialize(),
@@ -152,7 +145,7 @@ function App() {
   };
 
   const triggerClaimGold = async () => {
-    const tx = await claimGold(connection, new PublicKey(session.wallet));
+    const tx = await claimGold(rpcUrl, session.wallet);
 
     panGameInstance.sendTransaction({
       data: tx.serialize(),
@@ -161,7 +154,7 @@ function App() {
   };
 
   const triggerUpgrade = async () => {
-    const tx = await upgrade(connection, new PublicKey(session.wallet));
+    const tx = await upgrade(rpcUrl, session.wallet);
 
     panGameInstance.sendTransaction({
       data: tx.serialize(),
@@ -170,7 +163,7 @@ function App() {
   };
 
   const triggerRepair = async () => {
-    const tx = await repair(connection, new PublicKey(session.wallet));
+    const tx = await repair(rpcUrl, session.wallet);
 
     panGameInstance.sendTransaction({
       data: tx.serialize(),
@@ -179,15 +172,15 @@ function App() {
   };
 
   const triggerFetchPlayer = async () => {
-    const player = await fetchPlayer(connection, new PublicKey(session.wallet));
+    const player = await fetchPlayer(rpcUrl, session.wallet);
     console.log(player);
     setPlayer(JSON.stringify(player));
   };
 
   const triggerFetchGoldBalance = async () => {
     const balance = await fetchBalance(
-      connection,
-      new PublicKey(session.wallet)
+      rpcUrl,
+      session.wallet
     );
     setBalance(JSON.stringify(balance));
   };
