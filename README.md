@@ -24,7 +24,7 @@ We have a SDK that support interaction with the contract.
 Install dependency:
 
 ```bash
-"@digi-money/galactic-game-contract-sdk": "0.0.1-rc33"
+"@digi-money/galactic-game-contract-sdk": "0.0.1-rc37"
 ```
 
 Before calling a game function, please make sure you have a connection instance. 
