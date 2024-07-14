@@ -1308,10 +1308,10 @@
   resolved "https://registry.npmjs.org/@csstools/selector-specificity/-/selector-specificity-2.2.0.tgz"
   integrity sha512-+OJ9konv95ClSTOJCmMZqpd5+YGsB2S+x6w3E1oaM8UuR5j8nTNHYSz8c9BEPGDOCMQYIEEGlVPj/VY64iTbGw==
 
-"@digi-money/galactic-game-contract-sdk@0.0.1-rc30":
-  version "0.0.1-rc30"
-  resolved "https://npm.pkg.github.com/download/@digi-money/galactic-game-contract-sdk/0.0.1-rc30/28827e21776be6d4191f0b1dd4d524ab0761c138"
-  integrity sha512-JQQMzUoXwTTkogq01nBwFSNF0VEyiBXFS77nkH5hnFmbVGehsCTV0mseIyWsXY06Rm679qTid6RB9nCsgmwOXw==
+"@digi-money/galactic-game-contract-sdk@0.0.1-rc33":
+  version "0.0.1-rc33"
+  resolved "https://npm.pkg.github.com/download/@digi-money/galactic-game-contract-sdk/0.0.1-rc33/f4b1b0c2cecad00d970addb8eb39d20fcd012893"
+  integrity sha512-tt9E+QgqyPlMqtW7/oXZieVheq8mCSaVp4F+UwBKKSsDA6iFhQP/iOjfdNWvqNMR7lkSHOIz2wvFv+5ZXrwXdA==
   dependencies:
     "@coral-xyz/anchor" "0.29.0"
     "@coral-xyz/borsh" "0.29.0"

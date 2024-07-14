@@ -4,9 +4,9 @@ import { ChainId, PanGame, PanSdkEvent } from "@digi-money/game";
 import { validateResponse } from "./helper";
 import { claimGold, createGalacticGameToken, initGame, startSession, startTheGame, upgrade, repair, fetchPlayer, fetchBalance } from "@digi-money/galactic-game-contract-sdk";
 import { Connection, PublicKey } from "@solana/web3.js";
-import { Buffer } from "buffer";
+import buffer from 'buffer'
 
-global.Buffer = Buffer;
+window.Buffer = buffer.Buffer;
 
 const panGameInstance = new PanGame();
 
@@ -17,7 +17,7 @@ function App() {
   const [player, setPlayer] = useState("");
   const [balance, setBalance] = useState("");
   const connection = new Connection('http://127.0.0.1:8899', 'confirmed');
-
+  window.Buffer = Buffer;
   useEffect(() => {
     const unsubscribe = panGameInstance.onMessage((response) => {
       try {
@@ -187,12 +187,12 @@ function App() {
   }
 
   const triggerFetchPlayer = async () => {
-    // const player = await fetchPlayer(
-    //   connection,
-    //   new PublicKey(session.wallet),
-    // );
-    // console.log(player);
-    // setPlayer(JSON.stringify(player));
+    const player = await fetchPlayer(
+      connection,
+      new PublicKey(session.wallet),
+    );
+    console.log(player);
+    setPlayer(JSON.stringify(player));
   }
 
   const triggerFetchGoldBalance = async () => {
