@@ -42,7 +42,7 @@ After connect wallet, you will receive a session with these data. We can use the
 Create token for the game
 
 ```js
-const tx = await createGalacticGameToken(
+const tx = await createGameToken(
   session.rpcUrl,
   session.wallet,
   "Gold token",
