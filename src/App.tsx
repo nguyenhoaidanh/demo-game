@@ -26,7 +26,6 @@ function App() {
   const [signTxsResponse, setSignTxsResponse] = useState("");
   const [player, setPlayer] = useState("");
   const [balance, setBalance] = useState("");
-  const rpcUrl = 'http://127.0.0.1:8899';
 
   window.Buffer = Buffer;
   useEffect(() => {
@@ -94,7 +93,7 @@ function App() {
 
   const triggerCreateToken = async () => {
     const tx = await createGalacticGameToken(
-      rpcUrl,
+      session.rpcUrl,
       session.wallet,
       "Gold token",
       "GOLD",
@@ -108,7 +107,7 @@ function App() {
   };
 
   const triggerInitGame = async () => {
-    const tx = await initGame(rpcUrl, session.wallet, {
+    const tx = await initGame(session.rpcUrl, session.wallet, {
       seasonDuration: 150,
       sessionDuration: 5,
       systemHealthCheckPeriod: 10,
@@ -127,7 +126,7 @@ function App() {
   };
 
   const triggerStartGame = async () => {
-    const tx = await startTheGame(rpcUrl, session.wallet);
+    const tx = await startTheGame(session.rpcUrl, session.wallet);
 
     panGameInstance.sendTransaction({
       data: tx.serialize(),
@@ -136,7 +135,7 @@ function App() {
   };
 
   const triggerStartSession = async () => {
-    const tx = await startSession(rpcUrl, session.wallet);
+    const tx = await startSession(session.rpcUrl, session.wallet);
 
     panGameInstance.sendTransaction({
       data: tx.serialize(),
@@ -145,7 +144,7 @@ function App() {
   };
 
   const triggerClaimGold = async () => {
-    const tx = await claimGold(rpcUrl, session.wallet);
+    const tx = await claimGold(session.rpcUrl, session.wallet);
 
     panGameInstance.sendTransaction({
       data: tx.serialize(),
@@ -154,7 +153,7 @@ function App() {
   };
 
   const triggerUpgrade = async () => {
-    const tx = await upgrade(rpcUrl, session.wallet);
+    const tx = await upgrade(session.rpcUrl, session.wallet);
 
     panGameInstance.sendTransaction({
       data: tx.serialize(),
@@ -163,7 +162,7 @@ function App() {
   };
 
   const triggerRepair = async () => {
-    const tx = await repair(rpcUrl, session.wallet);
+    const tx = await repair(session.rpcUrl, session.wallet);
 
     panGameInstance.sendTransaction({
       data: tx.serialize(),
@@ -172,14 +171,14 @@ function App() {
   };
 
   const triggerFetchPlayer = async () => {
-    const player = await fetchPlayer(rpcUrl, session.wallet);
+    const player = await fetchPlayer(session.rpcUrl, session.wallet);
     console.log(player);
     setPlayer(JSON.stringify(player));
   };
 
   const triggerFetchGoldBalance = async () => {
     const balance = await fetchBalance(
-      rpcUrl,
+      session.rpcUrl,
       session.wallet
     );
     setBalance(JSON.stringify(balance));
