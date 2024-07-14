@@ -2,21 +2,32 @@ import "./App.css";
 import { useEffect, useState } from "react";
 import { ChainId, PanGame, PanSdkEvent } from "@digi-money/game";
 import { validateResponse } from "./helper";
-import { claimGold, createGalacticGameToken, initGame, startSession, startTheGame, upgrade, repair, fetchPlayer, fetchBalance } from "@digi-money/galactic-game-contract-sdk";
+import {
+  claimGold,
+  createGalacticGameToken,
+  initGame,
+  startSession,
+  startTheGame,
+  upgrade,
+  repair,
+  fetchPlayer,
+  fetchBalance,
+} from "@digi-money/galactic-game-contract-sdk";
 import { Connection, PublicKey } from "@solana/web3.js";
-import buffer from 'buffer'
+import buffer from "buffer";
 
 window.Buffer = buffer.Buffer;
+window.global ||= window;
 
 const panGameInstance = new PanGame();
 
 function App() {
-  const [session, setSession] = useState("");
+  const [session, setSession] = useState<any | undefined>("");
   const [signature, setSignature] = useState("");
   const [signTxsResponse, setSignTxsResponse] = useState("");
   const [player, setPlayer] = useState("");
   const [balance, setBalance] = useState("");
-  const connection = new Connection('http://127.0.0.1:8899', 'confirmed');
+  const connection = new Connection("http://127.0.0.1:8899", "confirmed");
   window.Buffer = Buffer;
   useEffect(() => {
     const unsubscribe = panGameInstance.onMessage((response) => {
@@ -27,7 +38,7 @@ function App() {
           case PanSdkEvent.RES_CONNECT_WALLET:
             validateResponse(response);
             setSession(data);
-            localStorage.setItem("connected", 1);
+            localStorage.setItem("connected", "1");
             break;
 
           case PanSdkEvent.RES_SIGN_MESSAGE:
@@ -62,8 +73,8 @@ function App() {
   };
 
   const reqDisconnectWallet = () => {
-    panGameInstance.disconnectWallet();
-    setSession();
+    panGameInstance.disconnectWallet(null);
+    setSession(undefined);
     localStorage.removeItem("connected");
   };
 
@@ -85,115 +96,93 @@ function App() {
     const tx = await createGalacticGameToken(
       connection,
       new PublicKey(session.wallet),
-      'Gold token',
-      'GOLD',
-      'https://5vfxc4tr6xoy23qefqbj4qx2adzkzapneebanhcalf7myvn5gzja.arweave.net/7UtxcnH13Y1uBCwCnkL6APKsge0hAgacQFl-zFW9NlI',
+      "Gold token",
+      "GOLD",
+      "https://5vfxc4tr6xoy23qefqbj4qx2adzkzapneebanhcalf7myvn5gzja.arweave.net/7UtxcnH13Y1uBCwCnkL6APKsge0hAgacQFl-zFW9NlI"
     );
 
     panGameInstance.sendTransaction({
       data: tx.serialize(),
       chainId: ChainId.SOLANA,
     });
-  }
+  };
 
   const triggerInitGame = async () => {
     const [treasuryTokenAccount] = PublicKey.findProgramAddressSync(
       [Buffer.from("galactic-game-treasury")],
-      new PublicKey("6GeyBRLAG2wRnxnofRrv42MFj9UJL6CJ2bSxa9U5sG1d"),
+      new PublicKey("6GeyBRLAG2wRnxnofRrv42MFj9UJL6CJ2bSxa9U5sG1d")
     );
 
     console.log(treasuryTokenAccount.toBase58());
-    
-    const tx = await initGame(
-      connection,
-      new PublicKey(session.wallet),
-      {
-        seasonDuration: 150,
-        sessionDuration: 5,
-        systemHealthCheckPeriod: 10,
-        defaultBagCap: 5,
-        defaultHearts: 3,
-        goldEarnRates: Array.from({ length: 31 }, (_, i) => (i + 1) * 10),
-        goldRepairCosts: Array.from({ length: 31 }, (_, i) => (i + 1) * 3),
-        goldUpgradeCost: Array.from({ length: 30 }, (_, i) => i + 1),
-        upgradeDurations: Array.from({ length: 30 }, (_, i) => (i + 1) * 5),
-      }
-    );
+
+    const tx = await initGame(connection, new PublicKey(session.wallet), {
+      seasonDuration: 150,
+      sessionDuration: 5,
+      systemHealthCheckPeriod: 10,
+      defaultBagCap: 5,
+      defaultHearts: 3,
+      goldEarnRates: Array.from({ length: 31 }, (_, i) => (i + 1) * 10),
+      goldRepairCosts: Array.from({ length: 31 }, (_, i) => (i + 1) * 3),
+      goldUpgradeCost: Array.from({ length: 30 }, (_, i) => i + 1),
+      upgradeDurations: Array.from({ length: 30 }, (_, i) => (i + 1) * 5),
+    });
 
     panGameInstance.sendTransaction({
       data: tx.serialize(),
       chainId: ChainId.SOLANA,
     });
-  }
+  };
 
   const triggerStartGame = async () => {
-    const tx = await startTheGame(
-      connection,
-      new PublicKey(session.wallet),
-    );
+    const tx = await startTheGame(connection, new PublicKey(session.wallet));
 
     panGameInstance.sendTransaction({
       data: tx.serialize(),
       chainId: ChainId.SOLANA,
     });
-  }
+  };
 
   const triggerStartSession = async () => {
-    const tx = await startSession(
-      connection,
-      new PublicKey(session.wallet),
-    );
+    const tx = await startSession(connection, new PublicKey(session.wallet));
 
     panGameInstance.sendTransaction({
       data: tx.serialize(),
       chainId: ChainId.SOLANA,
     });
-  }
+  };
 
   const triggerClaimGold = async () => {
-    const tx = await claimGold(
-      connection,
-      new PublicKey(session.wallet),
-    );
+    const tx = await claimGold(connection, new PublicKey(session.wallet));
 
     panGameInstance.sendTransaction({
       data: tx.serialize(),
       chainId: ChainId.SOLANA,
     });
-  }
+  };
 
   const triggerUpgrade = async () => {
-    const tx = await upgrade(
-      connection,
-      new PublicKey(session.wallet),
-    );
+    const tx = await upgrade(connection, new PublicKey(session.wallet));
 
     panGameInstance.sendTransaction({
       data: tx.serialize(),
       chainId: ChainId.SOLANA,
     });
-  }
+  };
 
   const triggerRepair = async () => {
-    const tx = await repair(
-      connection,
-      new PublicKey(session.wallet),
-    );
+    const tx = await repair(connection, new PublicKey(session.wallet));
 
     panGameInstance.sendTransaction({
       data: tx.serialize(),
       chainId: ChainId.SOLANA,
     });
-  }
+  };
 
   const triggerFetchPlayer = async () => {
-    const player = await fetchPlayer(
-      connection,
-      new PublicKey(session.wallet),
-    );
+    const player = await fetchPlayer(connection, new PublicKey(session.wallet));
     console.log(player);
     setPlayer(JSON.stringify(player));
-  }
+  };
 
   const triggerFetchGoldBalance = async () => {
     const balance = await fetchBalance(
@@ -201,7 +190,7 @@ function App() {
       new PublicKey(session.wallet)
     );
     setBalance(JSON.stringify(balance));
-  }
+  };
 
   useEffect(() => {
     // the first time visit app, request connect
@@ -242,7 +231,9 @@ function App() {
             <hr style={{ width: "100%" }} />
             <button onClick={triggerStartGame}>Owner: Start game</button>
             <hr style={{ width: "100%" }} />
-            <button onClick={triggerStartSession}>Player: Start session </button>
+            <button onClick={triggerStartSession}>
+              Player: Start session{" "}
+            </button>
             <hr style={{ width: "100%" }} />
             <button onClick={triggerClaimGold}>Player: Claim gold</button>
             <hr style={{ width: "100%" }} />
@@ -252,12 +243,12 @@ function App() {
             <hr style={{ width: "100%" }} />
             <button onClick={triggerFetchPlayer}>Player: fetch</button>
             {player && (
-              <p style={{ wordBreak: "break-all" }}>
-                {JSON.stringify(player)}
-              </p>
+              <p style={{ wordBreak: "break-all" }}>{JSON.stringify(player)}</p>
             )}
             <hr style={{ width: "100%" }} />
-            <button onClick={triggerFetchGoldBalance}>Player: fetch balance</button>
+            <button onClick={triggerFetchGoldBalance}>
+              Player: fetch balance
+            </button>
             {balance && (
               <p style={{ wordBreak: "break-all" }}>
                 {JSON.stringify(balance)}

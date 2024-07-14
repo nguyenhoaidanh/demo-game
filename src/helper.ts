@@ -1,6 +1,6 @@
 import { PanResponseStatus } from "@digi-money/game";
 
-export const validateResponse = ({ status, error }) => {
+export const validateResponse = ({ status, error }: any) => {
   if (status === PanResponseStatus.REJECT) {
     throw new Error("User reject request");
   }
