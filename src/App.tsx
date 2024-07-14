@@ -4,7 +4,7 @@ import { ChainId, PanGame, PanSdkEvent } from "@digi-money/game";
 import { validateResponse } from "./helper";
 import {
   claimGold,
-  createGalacticGameToken,
+  createGameToken,
   initGame,
   startSession,
   startTheGame,
@@ -12,6 +12,7 @@ import {
   repair,
   fetchPlayer,
   fetchBalance,
+  refreshPlayer,
 } from "@digi-money/galactic-game-contract-sdk";
 import buffer from "buffer";
 
@@ -92,7 +93,7 @@ function App() {
   };
 
   const triggerCreateToken = async () => {
-    const tx = await createGalacticGameToken(
+    const tx = await createGameToken(
       session.rpcUrl,
       session.wallet,
       "Gold token",
@@ -170,6 +171,15 @@ function App() {
     });
   };
 
+  const triggerRefreshPlayer = async () => {
+    const tx = await refreshPlayer(session.rpcUrl, session.wallet);
+
+    panGameInstance.sendTransaction({
+      data: tx.serialize(),
+      chainId: ChainId.SOLANA,
+    });
+  };
+
   const triggerFetchPlayer = async () => {
     const player = await fetchPlayer(session.rpcUrl, session.wallet);
     console.log(player);
@@ -232,6 +242,8 @@ function App() {
             <button onClick={triggerRepair}>Player: Repair</button>
             <hr style={{ width: "100%" }} />
             <button onClick={triggerUpgrade}>Player: upgrade</button>
+            <hr style={{ width: "100%" }} />
+            <button onClick={triggerRefreshPlayer}>Player: refresh states</button>
             <hr style={{ width: "100%" }} />
             <button onClick={triggerFetchPlayer}>Player: fetch</button>
             {player && (
