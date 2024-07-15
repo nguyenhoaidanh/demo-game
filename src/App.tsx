@@ -187,10 +187,7 @@ function App() {
   };
 
   const triggerFetchGoldBalance = async () => {
-    const balance = await fetchBalance(
-      session.rpcUrl,
-      session.wallet
-    );
+    const balance = await fetchBalance(session.rpcUrl, session.wallet);
     setBalance(JSON.stringify(balance));
   };
 
@@ -243,7 +240,9 @@ function App() {
             <hr style={{ width: "100%" }} />
             <button onClick={triggerUpgrade}>Player: upgrade</button>
             <hr style={{ width: "100%" }} />
-            <button onClick={triggerRefreshPlayer}>Player: refresh states</button>
+            <button onClick={triggerRefreshPlayer}>
+              Player: refresh states
+            </button>
             <hr style={{ width: "100%" }} />
             <button onClick={triggerFetchPlayer}>Player: fetch</button>
             {player && (
