@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@digi-money/galactic-game-contract-sdk": "file:./galactic-game-sdk-v0.0.1-rc40.tgz",
-    "@digi-money/game": "file:./digi-money-game-v0.0.2-rc3.tgz",
+    "@digi-money/game": "file:./digi-money-game-v0.0.2-rc4.tgz",
     "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
     "crypto-browserify": "^3.12.0",
     "react": "^18.3.1",

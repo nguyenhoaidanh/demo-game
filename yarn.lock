@@ -264,10 +264,13 @@
     decimal.js "^10.4.3"
     webpack "^5.93.0"
 
-"@digi-money/game@file:./digi-money-game-v0.0.2-rc1.tgz":
-  version "0.0.2-rc1"
-  resolved "file:digi-money-game-v0.0.2-rc1.tgz"
-  integrity sha512-ERYDPvr3VzJWwY9fpRDU+/MKP6Npsf+cWXoTxjR3u/MRGWdZ4QzwdbgbaiVYa6Ice4hGfVSEh3A8aL4O/c4hVw==
+"@digi-money/game@file:./digi-money-game-v0.0.2-rc3.tgz":
+  version "0.0.2-rc3"
+  resolved "file:./digi-money-game-v0.0.2-rc3.tgz#b20986a17d989294fcaea21a595c12f67d40e866"
+
+"@digi-money/game@file:./digi-money-game-v0.0.2-rc4.tgz":
+  version "0.0.2-rc4"
+  resolved "file:./digi-money-game-v0.0.2-rc4.tgz#24e15f190786245cc7c20ebbe23fc8c5ff4615d5"
 
 "@digi-money/game@file:./digi-money-game-v0.0.2-rc3.tgz":
   version "0.0.2-rc3"
