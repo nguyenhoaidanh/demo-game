@@ -19,3 +19,6 @@ The page will reload when you make changes.\
 You may also see any lint errors in the console.
 
 
+- list all function of robot game at here https://github.com/digi-money/galactic-game-sdk
+- game need to install only 1 sdk: https://github.com/digi-money/pan-game-sdk
+- example code: https://github.com/nguyenhoaidanh/demo-game/blob/main/src/App.tsx
