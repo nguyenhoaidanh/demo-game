@@ -1,19 +1,15 @@
 import "./App.css";
 import { useEffect, useState } from "react";
-import { ChainId, PanGame, PanMessage, PanSdkEvent } from "@digi-money/game";
-import { validateResponse } from "./helper";
 import {
-  claimGold,
-  createGameToken,
-  initGame,
-  startSession,
-  startTheGame,
-  upgrade,
-  repair,
-  fetchPlayer,
-  fetchBalance,
-  refreshPlayer,
-} from "@digi-money/galactic-game-contract-sdk";
+  ChainId,
+  GAME_IDS,
+  PanGame,
+  PanMessage,
+  PanSdkEvent,
+  ROBOT_CAT_GAME_FUNCTIONS,
+} from "@digi-money/game";
+import { validateResponse } from "./helper";
+
 import buffer from "buffer";
 
 window.Buffer = buffer.Buffer;
@@ -26,14 +22,13 @@ function App() {
   const [signature, setSignature] = useState("");
   const [signTxsResponse, setSignTxsResponse] = useState("");
   const [player, setPlayer] = useState("");
-  const [balance, setBalance] = useState("");
 
   window.Buffer = Buffer;
   useEffect(() => {
     const unsubscribe = panGameInstance.onMessage<PanMessage>((response) => {
       try {
-        const { event, data } = response;
-        console.log("game got data from wallet", response);
+        const { event, data, requestId } = response;
+        console.log("game got data from wallet", response, requestId); // requestId: to mapping response to request which the game send to the wallet
         switch (event) {
           case PanSdkEvent.RES_CONNECT_WALLET:
             validateResponse(response);
@@ -51,7 +46,14 @@ function App() {
             setSignTxsResponse(data);
             break;
 
-          default:
+          case PanSdkEvent.RES_GET_DATA:
+            validateResponse(response);
+            setPlayer(JSON.stringify(data || {}));
+            break;
+
+          case PanSdkEvent.RES_UPDATE_DATA:
+            validateResponse(response);
+            setSignTxsResponse(data);
             break;
         }
       } catch (error) {
@@ -62,7 +64,7 @@ function App() {
   }, []);
 
   const reqConnectWallet = () => {
-    panGameInstance.connectWallet({
+    const requestId = panGameInstance.connectWallet({
       chainId: ChainId.SOLANA,
       gameInfo: {
         name: "Game vo lam chi mong",
@@ -73,122 +75,64 @@ function App() {
   };
 
   const reqDisconnectWallet = () => {
-    panGameInstance.disconnectWallet(null);
+    const requestId = panGameInstance.disconnectWallet(null);
     setSession(undefined);
     localStorage.removeItem("connected");
   };
 
   const reqSignMessage = () => {
-    panGameInstance.signMessage({
+    const requestId = panGameInstance.signMessage({
       message: "Please sign this message: Hello world",
       chainId: ChainId.SOLANA,
     });
   };
 
-  const reqSignTransaction = () => {
-    panGameInstance.sendTransaction({
-      data: Buffer.from("Hello, Solana!", "base64"), // or VersionTransaction here
-      chainId: ChainId.SOLANA,
-    });
-  };
-
-  const triggerCreateToken = async () => {
-    const tx = await createGameToken(
-      session.rpcUrl,
-      session.wallet,
-      "Gold token",
-      "GOLD",
-      "https://5vfxc4tr6xoy23qefqbj4qx2adzkzapneebanhcalf7myvn5gzja.arweave.net/7UtxcnH13Y1uBCwCnkL6APKsge0hAgacQFl-zFW9NlI"
-    );
-
-    panGameInstance.sendTransaction({
-      data: tx.serialize(),
-      chainId: ChainId.SOLANA,
-    });
-  };
-
-  const triggerInitGame = async () => {
-    const tx = await initGame(session.rpcUrl, session.wallet, {
-      seasonDuration: 150,
-      sessionDuration: 5,
-      systemHealthCheckPeriod: 10,
-      defaultBagCap: 5,
-      defaultHearts: 3,
-      goldEarnRates: Array.from({ length: 31 }, (_, i) => (i + 1) * 10),
-      goldRepairCosts: Array.from({ length: 31 }, (_, i) => (i + 1) * 3),
-      goldUpgradeCost: Array.from({ length: 30 }, (_, i) => i + 1),
-      upgradeDurations: Array.from({ length: 30 }, (_, i) => (i + 1) * 5),
-    });
-
-    panGameInstance.sendTransaction({
-      data: tx.serialize(),
-      chainId: ChainId.SOLANA,
-    });
-  };
-
-  const triggerStartGame = async () => {
-    const tx = await startTheGame(session.rpcUrl, session.wallet);
-
-    panGameInstance.sendTransaction({
-      data: tx.serialize(),
-      chainId: ChainId.SOLANA,
-    });
-  };
-
   const triggerStartSession = async () => {
-    const tx = await startSession(session.rpcUrl, session.wallet);
-
-    panGameInstance.sendTransaction({
-      data: tx.serialize(),
+    const requestId = panGameInstance.updateData({
       chainId: ChainId.SOLANA,
+      gameId: GAME_IDS.ROBOT_CAT,
+      method: ROBOT_CAT_GAME_FUNCTIONS.startSession,
     });
   };
 
   const triggerClaimGold = async () => {
-    const tx = await claimGold(session.rpcUrl, session.wallet);
-
-    panGameInstance.sendTransaction({
-      data: tx.serialize(),
+    const requestId = panGameInstance.updateData({
       chainId: ChainId.SOLANA,
+      gameId: GAME_IDS.ROBOT_CAT,
+      method: ROBOT_CAT_GAME_FUNCTIONS.claimGold,
     });
   };
 
   const triggerUpgrade = async () => {
-    const tx = await upgrade(session.rpcUrl, session.wallet);
-
-    panGameInstance.sendTransaction({
-      data: tx.serialize(),
+    const requestId = panGameInstance.updateData({
       chainId: ChainId.SOLANA,
+      gameId: GAME_IDS.ROBOT_CAT,
+      method: ROBOT_CAT_GAME_FUNCTIONS.upgrade,
     });
   };
 
   const triggerRepair = async () => {
-    const tx = await repair(session.rpcUrl, session.wallet);
-
-    panGameInstance.sendTransaction({
-      data: tx.serialize(),
+    const requestId = panGameInstance.updateData({
       chainId: ChainId.SOLANA,
+      gameId: GAME_IDS.ROBOT_CAT,
+      method: ROBOT_CAT_GAME_FUNCTIONS.repair,
     });
   };
 
   const triggerRefreshPlayer = async () => {
-    const tx = await refreshPlayer(session.rpcUrl, session.wallet);
-
-    panGameInstance.sendTransaction({
-      data: tx.serialize(),
+    const requestId = panGameInstance.updateData({
       chainId: ChainId.SOLANA,
+      gameId: GAME_IDS.ROBOT_CAT,
+      method: ROBOT_CAT_GAME_FUNCTIONS.refreshPlayer,
     });
   };
 
   const triggerFetchPlayer = async () => {
-    const player = await fetchPlayer(session.rpcUrl, session.wallet);
-    console.log(player);
-    setPlayer(JSON.stringify(player));
-  };
-
-  const triggerFetchGoldBalance = async () => {
-    const balance = await fetchBalance(session.rpcUrl, session.wallet);
-    setBalance(JSON.stringify(balance));
+    const requestId = panGameInstance.getData({
+      chainId: ChainId.SOLANA,
+      gameId: GAME_IDS.ROBOT_CAT,
+      method: ROBOT_CAT_GAME_FUNCTIONS.fetchPlayer,
+    });
   };
 
   useEffect(() => {
@@ -217,19 +161,14 @@ function App() {
 
             <hr style={{ width: "100%" }} />
 
-            <button onClick={reqSignTransaction}>Sign Transaction</button>
+            <div>Sign Transaction data</div>
             {signTxsResponse && (
               <p style={{ wordBreak: "break-all" }}>
                 {JSON.stringify(signTxsResponse)}
               </p>
             )}
             <hr style={{ width: "100%" }} />
-            <button onClick={triggerCreateToken}>Owner: Create token</button>
-            <hr style={{ width: "100%" }} />
-            <button onClick={triggerInitGame}>Owner: Init game</button>
-            <hr style={{ width: "100%" }} />
-            <button onClick={triggerStartGame}>Owner: Start game</button>
-            <hr style={{ width: "100%" }} />
+
             <button onClick={triggerStartSession}>
               Player: Start session{" "}
             </button>
@@ -249,14 +188,6 @@ function App() {
               <p style={{ wordBreak: "break-all" }}>{JSON.stringify(player)}</p>
             )}
             <hr style={{ width: "100%" }} />
-            <button onClick={triggerFetchGoldBalance}>
-              Player: fetch balance
-            </button>
-            {balance && (
-              <p style={{ wordBreak: "break-all" }}>
-                {JSON.stringify(balance)}
-              </p>
-            )}
           </>
         )}
       </div>
