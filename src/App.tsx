@@ -1,6 +1,6 @@
 import "./App.css";
 import { useEffect, useState } from "react";
-import { ChainId, PanGame, PanSdkEvent } from "@digi-money/game";
+import { ChainId, PanGame, PanMessage, PanSdkEvent } from "@digi-money/game";
 import { validateResponse } from "./helper";
 import {
   claimGold,
@@ -30,7 +30,7 @@ function App() {
 
   window.Buffer = Buffer;
   useEffect(() => {
-    const unsubscribe = panGameInstance.onMessage((response) => {
+    const unsubscribe = panGameInstance.onMessage<PanMessage>((response) => {
       try {
         const { event, data } = response;
         console.log("game got data from wallet", response);
