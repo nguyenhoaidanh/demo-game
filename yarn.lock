@@ -264,13 +264,13 @@
     decimal.js "^10.4.3"
     webpack "^5.93.0"
 
-"@digi-money/game@file:./digi-money-game-v0.0.6-rc1.tgz":
-  version "0.0.6-rc1"
-  resolved "file:./digi-money-game-v0.0.6-rc1.tgz#8afad1d9810adc1148257362a72fb5a543d3620e"
-
 "@digi-money/game@file:./digi-money-game-v0.0.6-rc2.tgz":
   version "0.0.6-rc2"
   resolved "file:./digi-money-game-v0.0.6-rc2.tgz#07305926677e456db530f0025e9cdc20ac95f0ab"
+
+"@digi-money/game@file:./digi-money-game-v0.0.6.tgz":
+  version "0.0.6"
+  resolved "file:./digi-money-game-v0.0.6.tgz#499648fd77a8559a09e731269198edc3f6ce77e3"
 
 "@esbuild-plugins/node-globals-polyfill@^0.2.3":
   version "0.2.3"

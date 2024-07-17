@@ -10,12 +10,9 @@ import {
 } from "@digi-money/game";
 import { validateResponse } from "./helper";
 
-import buffer from "buffer";
-
-window.Buffer = buffer.Buffer;
-window.global ||= window;
-
-const panGameInstance = new PanGame();
+const panGameInstance = new PanGame({
+  gameId: GAME_IDS.ROBOT_CAT,
+});
 
 function App() {
   const [session, setSession] = useState<any | undefined>("");
@@ -23,7 +20,6 @@ function App() {
   const [signTxsResponse, setSignTxsResponse] = useState("");
   const [player, setPlayer] = useState("");
 
-  window.Buffer = Buffer;
   useEffect(() => {
     const unsubscribe = panGameInstance.onMessage<PanMessage>((response) => {
       try {
@@ -90,48 +86,48 @@ function App() {
   const triggerStartSession = async () => {
     const requestId = panGameInstance.updateData({
       chainId: ChainId.SOLANA,
-      gameId: GAME_IDS.ROBOT_CAT,
       method: ROBOT_CAT_GAME_FUNCTIONS.startSession,
+      payload: {},
     });
   };
 
   const triggerClaimGold = async () => {
     const requestId = panGameInstance.updateData({
       chainId: ChainId.SOLANA,
-      gameId: GAME_IDS.ROBOT_CAT,
       method: ROBOT_CAT_GAME_FUNCTIONS.claimGold,
+      payload: {},
     });
   };
 
   const triggerUpgrade = async () => {
     const requestId = panGameInstance.updateData({
       chainId: ChainId.SOLANA,
-      gameId: GAME_IDS.ROBOT_CAT,
       method: ROBOT_CAT_GAME_FUNCTIONS.upgrade,
+      payload: {},
     });
   };
 
   const triggerRepair = async () => {
     const requestId = panGameInstance.updateData({
       chainId: ChainId.SOLANA,
-      gameId: GAME_IDS.ROBOT_CAT,
       method: ROBOT_CAT_GAME_FUNCTIONS.repair,
+      payload: {},
     });
   };
 
   const triggerRefreshPlayer = async () => {
     const requestId = panGameInstance.updateData({
       chainId: ChainId.SOLANA,
-      gameId: GAME_IDS.ROBOT_CAT,
       method: ROBOT_CAT_GAME_FUNCTIONS.refreshPlayer,
+      payload: {},
     });
   };
 
   const triggerFetchPlayer = async () => {
     const requestId = panGameInstance.getData({
       chainId: ChainId.SOLANA,
-      gameId: GAME_IDS.ROBOT_CAT,
       method: ROBOT_CAT_GAME_FUNCTIONS.fetchPlayer,
+      payload: {},
     });
   };
 
