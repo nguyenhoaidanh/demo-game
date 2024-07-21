@@ -2,6 +2,7 @@ import "./App.css";
 import { useEffect, useState } from "react";
 import {
   ChainId,
+  DevelopmentMode,
   GAME_IDS,
   PanGame,
   PanMessage,
@@ -12,6 +13,7 @@ import { validateResponse } from "./helper";
 
 const panGameInstance = new PanGame({
   gameId: GAME_IDS.ROBOT_CAT,
+  mode: DevelopmentMode.DEV, // remember update it to prod if you want to release
 });
 
 function App() {
