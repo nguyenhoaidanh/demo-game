@@ -18,6 +18,8 @@ const panGameInstance = new PanGame({
 
 function App() {
   const [session, setSession] = useState<any | undefined>("");
+  const [walletBalance, setWalletBalance] = useState<any | undefined>("");
+
   const [signature, setSignature] = useState("");
   const [signTxsResponse, setSignTxsResponse] = useState("");
   const [player, setPlayer] = useState("");
@@ -53,6 +55,11 @@ function App() {
             validateResponse(response);
             setSignTxsResponse(data);
             break;
+
+          case PanSdkEvent.RES_GET_WALLET_BALANCE_INFO:
+            validateResponse(response);
+            setWalletBalance(data);
+            break;
         }
       } catch (error) {
         alert(error);
@@ -76,6 +83,12 @@ function App() {
     const requestId = panGameInstance.disconnectWallet(null);
     setSession(undefined);
     localStorage.removeItem("connected");
+  };
+
+  const reqGetWalletBalance = () => {
+    const requestId = panGameInstance.getBalanceWalletInfo({
+      chainId: ChainId.SOLANA,
+    });
   };
 
   const reqSignMessage = () => {
@@ -147,6 +160,15 @@ function App() {
           <>
             <button onClick={reqDisconnectWallet}>disconnect</button>
             <p style={{ wordBreak: "break-all" }}>{JSON.stringify(session)}</p>
+
+            <hr style={{ width: "100%" }} />
+
+            <button onClick={reqGetWalletBalance}>Get Wallet Balance</button>
+            {walletBalance && (
+              <p style={{ wordBreak: "break-all" }}>
+                {JSON.stringify(walletBalance)}
+              </p>
+            )}
 
             <hr style={{ width: "100%" }} />
 
