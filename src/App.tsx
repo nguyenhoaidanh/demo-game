@@ -18,6 +18,8 @@ const panGameInstance = new PanGame({
 
 function App() {
   const [session, setSession] = useState<any | undefined>("");
+  const [estimateGas, setEstimateGas] = useState<any | undefined>("");
+
   const [walletBalance, setWalletBalance] = useState<any | undefined>("");
 
   const [signature, setSignature] = useState("");
@@ -60,6 +62,11 @@ function App() {
             validateResponse(response);
             setWalletBalance(data);
             break;
+
+          case PanSdkEvent.RES_ESTIMATE_GAS_UPDATE_DATA:
+            validateResponse(response);
+            setEstimateGas(data);
+            break;
         }
       } catch (error) {
         alert(error);
@@ -100,6 +107,14 @@ function App() {
 
   const triggerStartSession = async () => {
     const requestId = panGameInstance.updateData({
+      chainId: ChainId.SOLANA,
+      method: ROBOT_CAT_GAME_FUNCTIONS.startSession,
+      payload: {},
+    });
+  };
+
+  const triggerEstimateGasStartSession = async () => {
+    const requestId = panGameInstance.estimateGasUpdateData({
       chainId: ChainId.SOLANA,
       method: ROBOT_CAT_GAME_FUNCTIONS.startSession,
       payload: {},
@@ -193,6 +208,17 @@ function App() {
               Player: Start session{" "}
             </button>
             <hr style={{ width: "100%" }} />
+
+            <button onClick={triggerEstimateGasStartSession}>
+              Player: Estimate Start session{" "}
+            </button>
+            {estimateGas && (
+              <p style={{ wordBreak: "break-all" }}>
+                {estimateGas?.estimateGas?.toString()}
+              </p>
+            )}
+            <hr style={{ width: "100%" }} />
+
             <button onClick={triggerClaimGold}>Player: Claim gold</button>
             <hr style={{ width: "100%" }} />
             <button onClick={triggerRepair}>Player: Repair</button>

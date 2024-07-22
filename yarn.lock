@@ -216,6 +216,10 @@
   version "0.0.8-rc1"
   resolved "file:./digi-money-game-v0.0.8-rc1.tgz#3cdd958cedfa4c56e2a3943bd780fd2662e7732c"
 
+"@digi-money/game@file:./digi-money-game-v0.0.9-rc1.tgz":
+  version "0.0.9-rc1"
+  resolved "file:./digi-money-game-v0.0.9-rc1.tgz#428d180c9cce8786d6965f2ce62f09112b5426ee"
+
 "@esbuild-plugins/node-globals-polyfill@^0.2.3":
   version "0.2.3"
   resolved "https://registry.npmjs.org/@esbuild-plugins/node-globals-polyfill/-/node-globals-polyfill-0.2.3.tgz"
