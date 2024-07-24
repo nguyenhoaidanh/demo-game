@@ -212,9 +212,9 @@
     "@babel/helper-validator-identifier" "^7.24.7"
     to-fast-properties "^2.0.0"
 
-"@digi-money/game@file:./digi-money-game-v0.0.8-rc1.tgz":
-  version "0.0.8-rc1"
-  resolved "file:./digi-money-game-v0.0.8-rc1.tgz#3cdd958cedfa4c56e2a3943bd780fd2662e7732c"
+"@digi-money/game@file:./digi-money-game-v0.0.10-rc1.tgz":
+  version "0.0.10-rc1"
+  resolved "file:./digi-money-game-v0.0.10-rc1.tgz#2bcf025a3b7ab2876caf5c1ca88dca2fdf52f344"
 
 "@digi-money/game@file:./digi-money-game-v0.0.9-rc1.tgz":
   version "0.0.9-rc1"

@@ -109,7 +109,7 @@ function App() {
     const requestId = panGameInstance.updateData({
       chainId: ChainId.SOLANA,
       method: ROBOT_CAT_GAME_FUNCTIONS.startSession,
-      payload: {},
+      payload: { waitForTransactionCompleted: true },
     });
   };
 
