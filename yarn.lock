@@ -216,9 +216,9 @@
   version "0.0.10-rc1"
   resolved "file:./digi-money-game-v0.0.10-rc1.tgz#2bcf025a3b7ab2876caf5c1ca88dca2fdf52f344"
 
-"@digi-money/game@file:./digi-money-game-v0.0.9-rc1.tgz":
-  version "0.0.9-rc1"
-  resolved "file:./digi-money-game-v0.0.9-rc1.tgz#428d180c9cce8786d6965f2ce62f09112b5426ee"
+"@digi-money/game@file:./digi-money-game-v0.0.11.tgz":
+  version "0.0.11"
+  resolved "file:./digi-money-game-v0.0.11.tgz#fad0e01004690cf8bfa9866adc03cd0d8d0f511a"
 
 "@esbuild-plugins/node-globals-polyfill@^0.2.3":
   version "0.2.3"
