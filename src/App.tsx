@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import "./App.css";
+import { useEffect, useRef, useState } from "react";
 import {
   ChainId,
   DevelopmentMode,
@@ -24,6 +25,9 @@ function App() {
   const [signature, setSignature] = useState("");
   const [signTxsResponse, setSignTxsResponse] = useState("");
   const [player, setPlayer] = useState("");
+  const [boxList, setBoxList] = useState([]);
+  // const [boxRequest, setBoxRequest] = useState("");
+  const boxRequestId = useRef("");
 
   useEffect(() => {
     const unsubscribe = panGameInstance.onMessage<PanMessage>((response) => {
@@ -49,7 +53,11 @@ function App() {
 
           case PanSdkEvent.RES_GET_DATA:
             validateResponse(response);
-            setPlayer(JSON.stringify(data || {}));
+            if (requestId === boxRequestId.current) {
+              setBoxList(data);
+            } else {
+              setPlayer(data);
+            }
             break;
 
           case PanSdkEvent.RES_UPDATE_DATA:
@@ -141,7 +149,10 @@ function App() {
     const requestId = panGameInstance.updateData({
       chainId: ChainId.SOLANA,
       method: ROBOT_CAT_GAME_FUNCTIONS.repair,
-      payload: {},
+      payload: {
+        waitForTransactionCompleted: true, 
+        heartNumber: 1,
+      },
     });
   };
 
@@ -158,6 +169,27 @@ function App() {
       chainId: ChainId.SOLANA,
       method: ROBOT_CAT_GAME_FUNCTIONS.fetchPlayer,
       payload: {},
+    });
+  };
+
+  const triggerFetchBoxList = () => {
+    const requestId = panGameInstance.getData({
+      chainId: ChainId.SOLANA,
+      method: ROBOT_CAT_GAME_FUNCTIONS.fetchBoxList,
+      payload: {},
+    });
+
+    boxRequestId.current = requestId;
+  };
+
+  const triggerBuyBox = async () => {
+    console.log(boxList[0].publicKey);
+    const requestId = panGameInstance.updateData({
+      chainId: ChainId.SOLANA,
+      method: ROBOT_CAT_GAME_FUNCTIONS.buyBox,
+      payload: {
+        boxPublicKey: boxList[0].publicKey,
+      },
     });
   };
 
@@ -224,6 +256,15 @@ function App() {
             <button onClick={triggerRepair}>Player: Repair</button>
             <hr style={{ width: "100%" }} />
             <button onClick={triggerUpgrade}>Player: upgrade</button>
+            <hr style={{ width: "100%" }} />
+            <button onClick={triggerFetchBoxList}>Player: fetch box list</button>
+            {boxList && (
+              <p style={{ wordBreak: "break-all" }}>
+                {JSON.stringify(boxList)}
+              </p>
+            )}
+            <hr style={{ width: "100%" }} />
+            <button onClick={triggerBuyBox}>Player: buy box</button>
             <hr style={{ width: "100%" }} />
             <button onClick={triggerRefreshPlayer}>
               Player: refresh states
