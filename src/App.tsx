@@ -110,7 +110,7 @@ function App() {
       chainId: ChainId.SOLANA,
     });
   };
-
+  //
   const triggerStartSession = async () => {
     const requestId = panGameInstance.updateData({
       chainId: ChainId.SOLANA,
