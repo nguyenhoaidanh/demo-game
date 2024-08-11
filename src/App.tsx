@@ -149,7 +149,7 @@ function App() {
       chainId: ChainId.SOLANA,
       method: ROBOT_CAT_GAME_FUNCTIONS.repair,
       payload: {
-        waitForTransactionCompleted: true, 
+        waitForTransactionCompleted: true,
         heartNumber: 1,
       },
     });
@@ -160,6 +160,7 @@ function App() {
       chainId: ChainId.SOLANA,
       method: ROBOT_CAT_GAME_FUNCTIONS.refreshPlayer,
       payload: {},
+      options: { waitForTransactionCompleted: true },
     });
   };
 
@@ -168,6 +169,12 @@ function App() {
       chainId: ChainId.SOLANA,
       method: ROBOT_CAT_GAME_FUNCTIONS.fetchPlayer,
       payload: {},
+    });
+  };
+
+  const openSocialLink = async () => {
+    const requestId = panGameInstance.openSocialLink({
+      url: "https://t.me/dotcoin_bot?start=r_5110018277",
     });
   };
 
@@ -256,7 +263,9 @@ function App() {
             <hr style={{ width: "100%" }} />
             <button onClick={triggerUpgrade}>Player: upgrade</button>
             <hr style={{ width: "100%" }} />
-            <button onClick={triggerFetchBoxList}>Player: fetch box list</button>
+            <button onClick={triggerFetchBoxList}>
+              Player: fetch box list
+            </button>
             {boxList && (
               <p style={{ wordBreak: "break-all" }}>
                 {JSON.stringify(boxList)}
@@ -274,6 +283,7 @@ function App() {
               <p style={{ wordBreak: "break-all" }}>{JSON.stringify(player)}</p>
             )}
             <hr style={{ width: "100%" }} />
+            <button onClick={openSocialLink}>Open social link</button>
           </>
         )}
       </div>
