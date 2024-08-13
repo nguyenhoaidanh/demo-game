@@ -212,14 +212,13 @@
     "@babel/helper-validator-identifier" "^7.24.7"
     to-fast-properties "^2.0.0"
 
-"@digi-money/game@file:./digi-money-game-0.0.12.tgz":
-  version "0.0.12"
-  resolved "file:digi-money-game-0.0.12.tgz"
-  integrity sha512-d3MV6UJSgGk7L7WobKYO6jUYE8SuC4Oj81LuvWIHKJ9JAMa2vLSS/hk7x+oKI1v5TyZOfOWrGzdGqyLn4rK4DQ==
-
 "@digi-money/game@file:./digi-money-game-v0.0.13-rc1.tgz":
   version "0.0.13-rc1"
   resolved "file:./digi-money-game-v0.0.13-rc1.tgz#aae6197d6f1b12c64334b9ad46a367adc6922575"
+
+"@digi-money/game@file:./digi-money-game-v0.0.13-rc2.tgz":
+  version "0.0.13-rc2"
+  resolved "file:./digi-money-game-v0.0.13-rc2.tgz#c4109ae01018473a5b31e76a09d154d29cb0a4e3"
 
 "@esbuild-plugins/node-globals-polyfill@^0.2.3":
   version "0.2.3"

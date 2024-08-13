@@ -178,6 +178,10 @@ function App() {
     });
   };
 
+  const openInviteFriend = async () => {
+    const requestId = panGameInstance.inviteFriend({});
+  };
+
   const triggerFetchBoxList = () => {
     const requestId = panGameInstance.getData({
       chainId: ChainId.SOLANA,
@@ -213,27 +217,21 @@ function App() {
           <>
             <button onClick={reqDisconnectWallet}>disconnect</button>
             <p style={{ wordBreak: "break-all" }}>{JSON.stringify(session)}</p>
-
             <hr style={{ width: "100%" }} />
-
             <button onClick={reqGetWalletBalance}>Get Wallet Balance</button>
             {walletBalance && (
               <p style={{ wordBreak: "break-all" }}>
                 {JSON.stringify(walletBalance)}
               </p>
             )}
-
             <hr style={{ width: "100%" }} />
-
             <button onClick={reqSignMessage}>Sign message</button>
             {signature && (
               <p style={{ wordBreak: "break-all" }}>
                 {JSON.stringify(signature)}
               </p>
             )}
-
             <hr style={{ width: "100%" }} />
-
             <div>Sign Transaction data</div>
             {signTxsResponse && (
               <p style={{ wordBreak: "break-all" }}>
@@ -241,12 +239,10 @@ function App() {
               </p>
             )}
             <hr style={{ width: "100%" }} />
-
             <button onClick={triggerStartSession}>
               Player: Start session{" "}
             </button>
             <hr style={{ width: "100%" }} />
-
             <button onClick={triggerEstimateGasStartSession}>
               Player: Estimate Start session{" "}
             </button>
@@ -256,7 +252,6 @@ function App() {
               </p>
             )}
             <hr style={{ width: "100%" }} />
-
             <button onClick={triggerClaimGold}>Player: Claim gold</button>
             <hr style={{ width: "100%" }} />
             <button onClick={triggerRepair}>Player: Repair</button>
@@ -283,7 +278,8 @@ function App() {
               <p style={{ wordBreak: "break-all" }}>{JSON.stringify(player)}</p>
             )}
             <hr style={{ width: "100%" }} />
-            <button onClick={openSocialLink}>Open social link</button>
+            <button onClick={openSocialLink}>Open social link</button>-
+            <button onClick={openInviteFriend}>Open Invite friend</button>
           </>
         )}
       </div>
