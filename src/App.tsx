@@ -24,9 +24,11 @@ function App() {
   const [signature, setSignature] = useState("");
   const [signTxsResponse, setSignTxsResponse] = useState("");
   const [player, setPlayer] = useState("");
+  const [missions, setMissions] = useState("");
   const [boxList, setBoxList] = useState([]);
   // const [boxRequest, setBoxRequest] = useState("");
   const boxRequestId = useRef("");
+  const missionsRequestId = useRef("");
 
   useEffect(() => {
     const unsubscribe = panGameInstance.onMessage<PanMessage>((response) => {
@@ -54,6 +56,8 @@ function App() {
             validateResponse(response);
             if (requestId === boxRequestId.current) {
               setBoxList(data);
+            } else if (requestId == missionsRequestId.current) {
+              setMissions(data);
             } else {
               setPlayer(data);
             }
@@ -203,6 +207,34 @@ function App() {
     });
   };
 
+  const fetchMissions = async () => {
+    missionsRequestId.current = panGameInstance.getData({
+      chainId: ChainId.SOLANA,
+      method: ROBOT_CAT_GAME_FUNCTIONS.fetchMissions,
+      payload: {},
+    });
+  }
+
+  const verifyMission = async () => {
+    const requestId = panGameInstance.updateData({
+      chainId: ChainId.SOLANA,
+      method: ROBOT_CAT_GAME_FUNCTIONS.verifyMission,
+      payload: {
+        missionId: 3,
+      },
+    });
+  }
+
+  const claimMission = async () => {
+    const requestId = panGameInstance.updateData({
+      chainId: ChainId.SOLANA,
+      method: ROBOT_CAT_GAME_FUNCTIONS.claimMissionReward,
+      payload: {
+        missionId: 3,
+      },
+    });
+  }
+
   useEffect(() => {
     // the first time visit app, request connect
     if (localStorage.getItem("connected")) reqConnectWallet();
@@ -280,6 +312,13 @@ function App() {
             <hr style={{ width: "100%" }} />
             <button onClick={openSocialLink}>Open social link</button>-
             <button onClick={openInviteFriend}>Open Invite friend</button>
+            <hr style={{ width: "100%" }} />
+            <button onClick={fetchMissions}>Fetch missions</button>
+            {missions && (
+              <p style={{ wordBreak: "break-all" }}>{JSON.stringify(missions)}</p>
+            )}
+            <button onClick={verifyMission}>Verify mission</button>
+            <button onClick={claimMission}>Claim mission reward</button>
           </>
         )}
       </div>
