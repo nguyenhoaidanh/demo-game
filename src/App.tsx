@@ -197,12 +197,11 @@ function App() {
   };
 
   const triggerBuyBox = async () => {
-    console.log(boxList[0].publicKey);
     const requestId = panGameInstance.updateData({
       chainId: ChainId.SOLANA,
       method: ROBOT_CAT_GAME_FUNCTIONS.buyBox,
       payload: {
-        boxPublicKey: boxList[0].publicKey,
+        id: 4,
       },
     });
   };
