@@ -234,6 +234,15 @@ function App() {
     });
   }
 
+  const login = async () => {
+    panGameInstance.updateData({
+      chainId: ChainId.SOLANA,
+      method: ROBOT_CAT_GAME_FUNCTIONS.login,
+      payload: {
+      },
+    });
+  }
+
   useEffect(() => {
     // the first time visit app, request connect
     if (localStorage.getItem("connected")) reqConnectWallet();
@@ -318,6 +327,7 @@ function App() {
             )}
             <button onClick={verifyMission}>Verify mission</button>
             <button onClick={claimMission}>Claim mission reward</button>
+            <button onClick={login}>Login</button>
           </>
         )}
       </div>
