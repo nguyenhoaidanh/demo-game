@@ -186,6 +186,10 @@ function App() {
     const requestId = panGameInstance.inviteFriend({});
   };
 
+  const openReferral = async () => {
+    const requestId = panGameInstance.openReferral({});
+  };
+
   const triggerFetchBoxList = () => {
     const requestId = panGameInstance.getData({
       chainId: ChainId.SOLANA,
@@ -203,6 +207,7 @@ function App() {
       payload: {
         id: 4,
       },
+      options: { waitForTransactionCompleted: false },
     });
   };
 
@@ -212,7 +217,7 @@ function App() {
       method: ROBOT_CAT_GAME_FUNCTIONS.fetchMissions,
       payload: {},
     });
-  }
+  };
 
   const verifyMission = async () => {
     const requestId = panGameInstance.updateData({
@@ -222,7 +227,7 @@ function App() {
         missionId: 3,
       },
     });
-  }
+  };
 
   const claimMission = async () => {
     const requestId = panGameInstance.updateData({
@@ -232,7 +237,7 @@ function App() {
         missionId: 3,
       },
     });
-  }
+  };
 
   const login = async () => {
     panGameInstance.updateData({
@@ -318,14 +323,21 @@ function App() {
               <p style={{ wordBreak: "break-all" }}>{JSON.stringify(player)}</p>
             )}
             <hr style={{ width: "100%" }} />
-            <button onClick={openSocialLink}>Open social link</button>-
+            <button onClick={openSocialLink}>Open social link</button>
+            <hr style={{ width: "100%" }} />
             <button onClick={openInviteFriend}>Open Invite friend</button>
+            <hr style={{ width: "100%" }} />
+            <button onClick={openReferral}>Open Referral</button>
             <hr style={{ width: "100%" }} />
             <button onClick={fetchMissions}>Fetch missions</button>
             {missions && (
-              <p style={{ wordBreak: "break-all" }}>{JSON.stringify(missions)}</p>
+              <p style={{ wordBreak: "break-all" }}>
+                {JSON.stringify(missions)}
+              </p>
             )}
+            <hr style={{ width: "100%" }} />
             <button onClick={verifyMission}>Verify mission</button>
+            <hr style={{ width: "100%" }} />
             <button onClick={claimMission}>Claim mission reward</button>
             <button onClick={login}>Login</button>
           </>
