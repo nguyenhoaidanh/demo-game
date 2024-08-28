@@ -183,11 +183,17 @@ function App() {
   };
 
   const openInviteFriend = async () => {
-    const requestId = panGameInstance.inviteFriend({});
+    const requestId = panGameInstance.inviteFriend({
+      message:
+        "Mining $RCAT just opened! Join now to claim your share and unlock other unlimited rewards.",
+    });
   };
 
   const openReferral = async () => {
-    const requestId = panGameInstance.openReferral({});
+    const requestId = panGameInstance.openReferral({
+      message:
+        "Mining $RCAT just opened! Join now to claim your share and unlock other unlimited rewards.",
+    });
   };
 
   const triggerFetchBoxList = () => {
@@ -243,10 +249,9 @@ function App() {
     panGameInstance.updateData({
       chainId: ChainId.SOLANA,
       method: ROBOT_CAT_GAME_FUNCTIONS.login,
-      payload: {
-      },
+      payload: {},
     });
-  }
+  };
 
   useEffect(() => {
     // the first time visit app, request connect
