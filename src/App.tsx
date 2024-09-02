@@ -9,6 +9,7 @@ import {
   ROBOT_CAT_GAME_FUNCTIONS,
 } from "@digi-money/game";
 import { validateResponse } from "./helper";
+import ConnectButton from "./ConnectWallet";
 
 const panGameInstance = new PanGame({
   gameId: GAME_IDS.ROBOT_CAT,
@@ -261,6 +262,7 @@ function App() {
   return (
     <div className="App">
       <div className="App-header">
+        <ConnectButton />
         {!session ? (
           <button onClick={reqConnectWallet}>connect</button>
         ) : (
